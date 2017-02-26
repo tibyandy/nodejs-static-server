@@ -1,7 +1,7 @@
 # aso-server
 A simple standalone/embeddable HTTP file server for NodeJS.
 
-- **Version 0.3.0.1** - Made embeddable besides standalone
+- **Version 0.3.01** - Made embeddable besides standalone
 - [Change History](CHANGELOG.md)
 - [GitHub](https://github.com/tibyandy/nodejs-static-server)
 

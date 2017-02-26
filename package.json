@@ -1,6 +1,6 @@
 {
   "name": "aso-server",
-  "version": "0.3.0.1",
+  "version": "0.3.01",
   "description": "Simple HTTP server for NodeJS.",
   "main": "server.js",
   "scripts": {
