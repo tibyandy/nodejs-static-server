@@ -1,7 +1,7 @@
 # aso-server
 A simple standalone/embeddable HTTP file server for NodeJS.
 
-- **Version 0.4.0** - Added new commands: `d` / `d.` / `i` / `i.`
+- **Version 0.4.1** - Added new commands: `d` / `d.` / `i` / `i.`
 - [GitHub](https://github.com/tibyandy/nodejs-static-server) / [Changelog](CHANGELOG.md)
 
 ## Running the server standalone:

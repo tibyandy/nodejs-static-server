@@ -2,6 +2,10 @@
 
 ## [0.4.0] - 2017-02-25
 
+### [0.4.1]
+1. Fixed subdirectory listing for paths not ended by `/`.
+
+### [0.4.0]
 1. Added new commands: `d` / `d.` / `i` / `i.` to the existing two `f` / `f.`
 
 ## [0.3.0] - 2017-02-25

@@ -75,8 +75,8 @@ const connectionHandler = (req, res) => {
 // Write the specified by "path" file's contents into "res"
 const fs = require('fs');
 const writeFileContents = (res, path) => {
-  if (path == '') {
-    path = '/';
+  if (path == '' || path.charAt(path.length - 1) != '/') {
+    path += '/';
   }
   try {
     let contents = fs.readFileSync(path);
@@ -98,8 +98,8 @@ const writeFileContents = (res, path) => {
 }
 
 const writeFileInfo = (res, path) => {
-  if (path == '') {
-    path = '/';
+  if (path == '' || path.charAt(path.length - 1) != '/') {
+    path += '/';
   }
   try {
     let stats = fs.statSync(path);
@@ -112,8 +112,8 @@ const writeFileInfo = (res, path) => {
 }
 
 const writeDirFiles = (res, path) => {
-  if (path == '') {
-    path = '/';
+  if (path == '' || path.charAt(path.length - 1) != '/') {
+    path += '/';
   }
   res.writeHead(200, {'Content-Type': 'text/plain'});
   return res.end(JSON.stringify(getDirFiles(path)));
