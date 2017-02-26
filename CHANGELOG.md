@@ -3,6 +3,7 @@
 ## [0.2.1] - 2017-02-25
 ### [0.2.1]
 1. Renamed project to **aso-server**
+
 ### [0.2.0]
 1. Made configurable host and ports
 1. Added help: `node server /?` or `node server --help` or `node server -h`
