@@ -2,7 +2,7 @@ const APP_NAME = 'aso-server';
 const DEFAULT_HOST = 'localhost';
 const DEFAULT_PORT = 3000;
 
-const getHostPort = () => {
+const getHostPortFromPrompt = () => {
   const args = process.argv;
   if (args.length > 3) {
     console.log('Expected zero or one arguments.\n');
@@ -33,8 +33,6 @@ Examples:
   node server 0.0.0.0:33669  Uses specified host and port
 `);
 }
-
-let [hostname, port] = getHostPort();
 
 const getHtml = (title, body) => `<html><head><title>${title}</title><link rel="icon" href="/f/favicon.png"></head><body>${body}\n<ul>\n`;
 
@@ -112,27 +110,80 @@ const listDirHtml = (res, path) => {
   return res.end(getHtml(path, body));  
 };
 
-// Start server, with error and close handling
-const server = require('http').createServer(connectionHandler);
-try {
-  server.on('error', e => {
-    if (e.code == 'EADDRINUSE') {
-      console.log(`ERROR: [EADDRINUSE] Address ${hostname}:${port} is already in use!\nIs ${APP_NAME} already running?`);
-    } else if (e.code == 'ENOTFOUND') {
-      console.log(`Hostname ${hostname} cannot be used.`);
-    } else if (e.code == 'EADDRNOTAVAIL') {
-      console.log(`Address ${hostname}:${port} is not available.`);
-    } else if (e.code == 'EACCES') {
-      console.log(`Address ${hostname}:${port} cannot be used.`);
-    } else {
-      console.log(`ERROR: [${e.code}] ${e}`);
-    }
-    server.close();
-  }).on('close', e => {
-    console.log('Server stopped.');
-  }).listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/\nHit CTRL+C (or CMD+C) to stop`);
-  });
-} catch (e) {
-  console.log(e.message);
+
+const startServerFromPrompt = () => {
+  let [hostname, port] = getHostPortFromPrompt();
+  let server = require('http').createServer(connectionHandler);
+  try {
+    server.on('error', e => {
+      switch (e.code) {
+        case 'EADDRINUSE':
+          msg = `ERROR: [EADDRINUSE] Address ${hostname}:${port} is already in use!\nIs ${APP_NAME} already running?`;
+          break;
+        case 'ENOTFOUND':
+          msg = `Hostname ${hostname} cannot be used.`;
+          break;
+        case 'EADDRNOTAVAIL':
+          msg = `Address ${hostname}:${port} is not available.`;
+          break;
+        case 'EACCES':
+          msg = `Address ${hostname}:${port} cannot be used.`;
+          break;
+        default:
+          msg = `ERROR: [${e.code}] ${e}`;
+      }
+      console.log(msg);
+      server.close();
+    }).on('close', e => { console.log('Server stopped.');
+    }).listen(port, hostname, () => {
+      console.log(`Server running at http://${hostname}:${port}/\nHit CTRL+C (or CMD+C) to stop`);
+    });
+  } catch (e) {
+    console.log(e.message);
+  }  
+};
+
+
+const exportServerAsModule = () => {
+  module.exports = ((hostname, port) => {
+    let server;
+    let errorCallback = (e) => { console.log(e); };
+    let stopCallback = errorCallback;
+
+    let serverModule = {
+      start: (hostname, port, startCallback) => {
+        try {
+          server = require('http').createServer(connectionHandler);
+          startCallback = startCallback ? startCallback : () => {};
+          server
+            .on('error', e => errorCallback(e))
+            .on('close', () => stopCallback())
+            .listen(port, hostname, () => startCallback(serverModule));
+        } catch (e) {
+          errorCallback(e);
+        }
+        return serverModule;
+      },
+      onError: (fn) => {
+        errorCallback = fn;
+        return serverModule;
+      },
+      onStop: (fn) => {
+        stopCallback = fn;
+        return serverModule;
+      },
+      stop: () => {
+        server.close();
+        return serverModule;
+      }
+    };
+    return serverModule;
+  })();
+};
+
+
+if (require.main === module) {
+  startServerFromPrompt();
+} else {
+  exportServerAsModule();
 }

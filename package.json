@@ -4,11 +4,16 @@
   "description": "Simple HTTP server for NodeJS.",
   "main": "server.js",
   "scripts": {
-    "start": "node server"
+    "start": "node server",
+    "test": "mocha test/module.test.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tibyandy/nodejs-static-server.git"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "mocha": "*"
   },
   "keywords": [
     "server",
