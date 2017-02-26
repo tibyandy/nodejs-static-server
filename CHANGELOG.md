@@ -1,6 +1,8 @@
 # Changelog
 
 ## [0.3.0] - 2017-02-25
+**[0.3.0.1]** - README.md, CHANGELOG.md fixes
+
 1. Made ALSO embedable. Use with
 
         const asoServer = require('../server');

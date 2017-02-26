@@ -1,7 +1,9 @@
 # aso-server
-A simple standalone/embeddable static server for NodeJS.
+A simple standalone/embeddable HTTP file server for NodeJS.
 
-*[Version 0.3.0](CHANGELOG.md) - Made embeddable besides standalone*
+- **Version 0.3.0.1** - Made embeddable besides standalone
+- [Change History](CHANGELOG.md)
+- [GitHub](https://github.com/tibyandy/nodejs-static-server)
 
 ## Running the server standalone:
 Open your terminal on any desired directory and type
@@ -67,4 +69,4 @@ http://localhost:3000/g/unhandled/command
 
 ## Requirements:
 * [NodeJS](https://nodejs.org/) (tested with Node v6.10.0)
-* [git](https://git-scm.com/) (for downloading the code only, but you can get the whole code on the "Clone or download" button)
+* [git](https://git-scm.com/) OR [npm](https://www.npmjs.com/package/aso-server/tutorial) OR get the whole code with the "Clone or download" button
