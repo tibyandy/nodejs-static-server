@@ -1,0 +1,29 @@
+{
+  "name": "static-server",
+  "version": "0.1.0",
+  "description": "Ultra simple static server for NodeJS.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tibyandy/nodejs-static-server.git"
+  },
+  "keywords": [
+    "server",
+    "http",
+    "file",
+    "server",
+    "static",
+    "apache",
+    "tomcat",
+    "jetty"
+  ],
+  "author": "Anderson Sumitomo Otuka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tibyandy/nodejs-static-server/issues"
+  },
+  "homepage": "https://github.com/tibyandy/nodejs-static-server#readme"
+}

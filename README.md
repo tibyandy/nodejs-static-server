@@ -1,26 +1,30 @@
-# nodejs-static-server
-Ultra simple static server for NodeJS.
+# static-server
+A simple static server for NodeJS.
+
+*[Version 0.2.0](CHANGELOG.md) - Configurable host and ports; npm compatible*
 
 ## Usage:
 ### http://127.0.0.1:3000/f./
-Lists all files and subdirectories where the **nodejs-static-server** is running.
+Lists all files and subdirectories where the **static-server** is running.
 
 ### http://127.0.0.1:3000/f/
 Lists all files and directories from the `/` **(root)** directory.
 
-### http://127.0.0.1:3000/f/[relative_path]
-### http://127.0.0.1:3000/f//[absolute_path]
-If `[absolute_path]`/`[relative_path]` points to a directory, lists all files and subdirectories from that path.
+### http://127.0.0.1:3000/f/{path}/{to}/{file}
+Retrieve a file relative to the **static-server** directory, or list all files/directories from **{file}** is a directory.
 
-If `[absolute_path]`/`[relative_path]` points to a file, retrieves the file.
+### http://127.0.0.1:3000/f//{path}/{to}/{file}
+Retrieve a file relative to the **root** directory, or list all files/directories from **{file}** is a directory.
 
 ## Examples:
-Try pointing your internet browser to those URLs:
+After starting **static-server**, try pointing your internet browser to those URLs:
 ```
-http://127.0.0.1:3000/f//home/andy
-http://127.0.0.1:3000/f//home/andy/.bashrc
-http://127.0.0.1:3000/f/favicon.ico
-http://127.0.0.1:3000/f/server.js
+http://localhost:3000/
+http://localhost:3000/f//home
+http://localhost:3000/f/favicon.ico
+http://localhost:3000/f/server.js
+http://localhost:3000/f.
+http://localhost:3000/g/unhandled/command
 ```
 
 ## Running the server:
@@ -32,10 +36,16 @@ node server
 ```
 The server will return:
 ```
-Server running at http://127.0.0.1:3000/
+Server running at http://localhost:3000/
+Hit CTRL+C (or CMD+C) to stop
 ```
-Hit Ctrl+C (or cmd+c on a Mac) to stop the server.
+For more options, type any of the below commands:
+```
+node server help
+node server /?
+node server -h
+```
 
 ## Requirements:
-* NodeJS (tested with Node v6.10.0)
-* Git (for downloading the code only, but you can get the whole code on the "Clone or download" button)
+* [NodeJS](https://nodejs.org/) (tested with Node v6.10.0)
+* [git](https://git-scm.com/) (for downloading the code only, but you can get the whole code on the "Clone or download" button)
