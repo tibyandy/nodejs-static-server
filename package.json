@@ -1,7 +1,7 @@
 {
-  "name": "static-server",
-  "version": "0.1.0",
-  "description": "Ultra simple static server for NodeJS.",
+  "name": "aso-server",
+  "version": "0.2.1",
+  "description": "Simple HTTP server for NodeJS.",
   "main": "server.js",
   "scripts": {
     "start": "node server"

@@ -1,7 +1,7 @@
-# static-server
+# aso-server
 A simple static server for NodeJS.
 
-*[Version 0.2.0](CHANGELOG.md) - Configurable host and ports; npm compatible*
+*[Version 0.2.1](CHANGELOG.md) - Configurable host and ports; npm compatible*
 
 ## Usage:
 ### http://127.0.0.1:3000/f./

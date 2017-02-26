@@ -1,4 +1,4 @@
-const APP_NAME = 'static-server';
+const APP_NAME = 'aso-server';
 const DEFAULT_HOST = 'localhost';
 const DEFAULT_PORT = 3000;
 
