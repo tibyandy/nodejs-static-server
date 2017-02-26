@@ -49,6 +49,14 @@ const connectionHandler = (req, res) => {
     return writeFileContents(res, '.');
   } else if (action == 'favicon.ico') {
     return writeFileContents(res, './favicon.png');
+  } else if (action == 'i') {
+    return writeFileInfo(res, value);
+  } else if (action == 'i.') {
+    return writeFileInfo(res, '.');
+  } else if (action == 'd') {
+    return writeDirFiles(res, value);
+  } else if (action == 'd.') {
+    return writeDirFiles(res, '.');
   } else {
     let body = `<h1><a href="/">${APP_NAME}</a></h1>`;
     if (action == '') {
@@ -87,6 +95,50 @@ const writeFileContents = (res, path) => {
     res.writeHead(400, {'Content-Type': 'text/plain'});
     return res.end(JSON.stringify(e));
   }
+}
+
+const writeFileInfo = (res, path) => {
+  if (path == '') {
+    path = '/';
+  }
+  try {
+    let stats = fs.statSync(path);
+    res.writeHead(200);
+    return res.end(JSON.stringify(stats));
+  } catch (e) {
+    res.writeHead(400, {'Content-Type': 'text/plain'});
+    return res.end(JSON.stringify(e));
+  }
+}
+
+const writeDirFiles = (res, path) => {
+  if (path == '') {
+    path = '/';
+  }
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  return res.end(JSON.stringify(getDirFiles(path)));
+}
+
+const getDirFiles = (path) => {
+  let files;
+  try {
+    files = fs.readdirSync(path);
+  } catch (e) {
+    return {exists: e.code !== 'ENOENT'};
+  }
+  let result = {exists: true, files: [], dirs: []};
+  for (i in files) {
+    let file = files[i];
+    let isDir;
+    try {
+      let fstat = fs.statSync(path + file);
+      isDir = fstat.isDirectory();
+    } catch (e) {
+      isDir = false;
+    }
+    result[isDir ? 'dirs' : 'files'].push(file);
+  }
+  return result;
 }
 
 // Lists directory as HTML

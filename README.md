@@ -1,9 +1,8 @@
 # aso-server
 A simple standalone/embeddable HTTP file server for NodeJS.
 
-- **Version 0.3.0** - Made embeddable besides standalone
-- [Change History](CHANGELOG.md)
-- [GitHub](https://github.com/tibyandy/nodejs-static-server)
+- **Version 0.4.0** - Added new commands: `d` / `d.` / `i` / `i.`
+- [GitHub](https://github.com/tibyandy/nodejs-static-server) / [Changelog](CHANGELOG.md)
 
 ## Running the server standalone:
 Open your terminal on any desired directory and type
@@ -24,7 +23,7 @@ node server /?
 node server -h
 ```
 
-## Running the server as a node module:
+## Embedding the server as a node module:
 1. Add **aso-server** as a npm dependency on **package.json**:  
 
         "dependencies": {
@@ -43,18 +42,27 @@ node server -h
             });
         // srv and server are the same
 
-## Server access URLs:
-### http://127.0.0.1:3000/f./
-Lists all files and subdirectories where the **static-server** is running.
+## Server URLs:
+All server files can be accessed through HTTP GET:
+```
+http://<host>:<port>/<dot_command>
+http://<host>:<port>/<command>/<path_to_relative_file>
+http://<host>:<port>/<command>//<path_to_absolute_file>
+```
+- When a **command** is followed by double-slashes (`//`), the provided path is considered **absolute** to the server root.
+- When it's followed by a single slash (`/`), it's considered **relative** to the path the server is running.
+- **dot_command**s - the same as **commands**, but followed by a dot character (`.`) - can be used to retrieve information of the path the server is running.
 
-### http://127.0.0.1:3000/f/
-Lists all files and directories from the `/` **(root)** directory.
 
-### http://127.0.0.1:3000/f/{path}/{to}/{file}
-Retrieve a file relative to the **static-server** directory, or list all files/directories from **{file}** is a directory.
+### Commands:
 
-### http://127.0.0.1:3000/f//{path}/{to}/{file}
-Retrieve a file relative to the **root** directory, or list all files/directories from **{file}** is a directory.
+- `f` / `f.` - Retrieve file (raw) or directory as HTML
+- `i` / `i.` - File information (JSON)
+- `d` / `d.` - Directory files JSON:
+ - `{"exists": false}` - It's not a file, nor a directory, or it has access denied
+ - `{"exists": true}` - Exists and it's not a directory
+ - `{"exists": true, "files":["filename1", "filename2"...], "dirs":["dirname1", "dirname2"...]}`
+
 
 ### Examples URLs:
 After starting **static-server**, try pointing your internet browser to those URLs:
@@ -68,5 +76,5 @@ http://localhost:3000/g/unhandled/command
 ```
 
 ## Requirements:
-* [NodeJS](https://nodejs.org/) (tested with Node v6.10.0)
-* [git](https://git-scm.com/) OR [npm](https://www.npmjs.com/package/aso-server/tutorial) OR get the whole code with the "Clone or download" button
+* For running: [NodeJS](https://nodejs.org/) (tested with Node v6.10.0)
+* For downloading: [git](https://git-scm.com/) OR [npm](https://www.npmjs.com/package/aso-server/tutorial) OR get the whole code with the "Clone or download" button
