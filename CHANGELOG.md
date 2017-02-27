@@ -1,6 +1,9 @@
 # Changelog
 
-## [0.4.0] - 2017-02-25
+## [0.4.2] - 2017-02-25
+
+### [0.4.2]
+1. Handle malformed URLs.
 
 ### [0.4.1]
 1. Fixed subdirectory listing for paths not ended by `/`.

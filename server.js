@@ -40,7 +40,13 @@ const getHtml = (title, body) => `<html><head><title>${title}</title><link rel="
 const connectionHandler = (req, res) => {
   let method = req.method;
   let action = req.url.substring(1).split('/');
-  let value = decodeURI(action.slice(1).join('/'));
+  let value;
+  try {
+    value = decodeURI(action.slice(1).join('/'));
+  } catch (e) {
+    res.writeHead(400, {'Content-Type': 'text/plain'});
+    return res.end('400 Bad request');
+  }
   action = action[0];
 
   if (action == 'f') {
