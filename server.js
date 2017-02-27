@@ -50,11 +50,11 @@ const connectionHandler = (req, res) => {
   action = action[0];
 
   if (action == 'f') {
-    return writeFileContents(res, value);
+    return writeFileContents(res, value, false);
   } else if (action == 'f.') {
-    return writeFileContents(res, '.');
+    return writeFileContents(res, './', true);
   } else if (action == 'favicon.ico') {
-    return writeFileContents(res, './favicon.png');
+    return writeFileContents(res, './favicon.png', false);
   } else if (action == 'i') {
     return writeFileInfo(res, value);
   } else if (action == 'i.') {
@@ -80,9 +80,9 @@ const connectionHandler = (req, res) => {
 
 // Write the specified by "path" file's contents into "res"
 const fs = require('fs');
-const writeFileContents = (res, path) => {
-  if (path == '' || path.charAt(path.length - 1) != '/') {
-    path += '/';
+const writeFileContents = (res, path, dotCommand) => {
+  if (path == '') {
+    path = '/';
   }
   try {
     let contents = fs.readFileSync(path);
@@ -96,7 +96,7 @@ const writeFileContents = (res, path) => {
       res.writeHead(403, 'Access Denied');
       return res.end('403 Access Denied');
     } else if (e.code === 'EISDIR') {
-      return listDirHtml(res, path);
+      return listDirHtml(res, path, dotCommand);
     }
     res.writeHead(400, {'Content-Type': 'text/plain'});
     return res.end(JSON.stringify(e));
@@ -104,8 +104,8 @@ const writeFileContents = (res, path) => {
 }
 
 const writeFileInfo = (res, path) => {
-  if (path == '' || path.charAt(path.length - 1) != '/') {
-    path += '/';
+  if (path == '') {
+    path = '/';
   }
   try {
     let stats = fs.statSync(path);
@@ -118,8 +118,8 @@ const writeFileInfo = (res, path) => {
 }
 
 const writeDirFiles = (res, path) => {
-  if (path == '' || path.charAt(path.length - 1) != '/') {
-    path += '/';
+  if (path == '') {
+    path = '/';
   }
   res.writeHead(200, {'Content-Type': 'text/plain'});
   return res.end(JSON.stringify(getDirFiles(path)));
@@ -148,11 +148,13 @@ const getDirFiles = (path) => {
 }
 
 // Lists directory as HTML
-const listDirHtml = (res, path) => {
+const listDirHtml = (res, path, dotCommand) => {
   res.writeHead(200, {'Content-Type': 'text/html'});
   let body = `<h1>${path}</h1>\n<ul>\n`
   let files = fs.readdirSync(path);
-  path += path == '/' ? '' : '/';
+  if (!dotCommand) {
+    path += path == '/' ? '' : '/';
+  }
   for (i in files) {
     let file = files[i];
     let dir;

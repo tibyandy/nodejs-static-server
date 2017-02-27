@@ -1,7 +1,7 @@
 # aso-server
 A simple standalone/embeddable HTTP file server for NodeJS.
 
-- **Version 0.4.2** - Added new commands: `d` / `d.` / `i` / `i.`
+- **Version 0.4.3** - Added new commands: `d` / `d.` / `i` / `i.`
 - [GitHub](https://github.com/tibyandy/nodejs-static-server) / [Changelog](CHANGELOG.md)
 
 ## Running the server standalone:
@@ -27,7 +27,7 @@ node server -h
 1. Add **aso-server** as a npm dependency on **package.json**:  
 
         "dependencies": {
-            "aso-server": "^0.4.2"
+            "aso-server": "^0.4.3"
         }
 1. Embed the server with:  
 
