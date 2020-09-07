@@ -85,6 +85,10 @@ const writeFileContents = (res, path, dotCommand) => {
     path = '/';
   }
   try {
+
+    if(!path.startsWith('/'))
+      path = process.cwd() + path.replace(/(\.\.)/g, '');
+
     let contents = fs.readFileSync(path);
     res.writeHead(200);
     return res.end(contents);
@@ -108,6 +112,10 @@ const writeFileInfo = (res, path) => {
     path = '/';
   }
   try {
+
+    if(!path.startsWith('/'))
+      path = process.cwd() + path.replace(/(\.\.)/g, '');
+
     let stats = fs.statSync(path);
     res.writeHead(200);
     return res.end(JSON.stringify(stats));
@@ -121,6 +129,10 @@ const writeDirFiles = (res, path) => {
   if (path == '') {
     path = '/';
   }
+
+  if(!path.startsWith('/'))
+    path = process.cwd() + path.replace(/(\.\.)/g, '');
+  
   res.writeHead(200, {'Content-Type': 'text/plain'});
   return res.end(JSON.stringify(getDirFiles(path)));
 }
